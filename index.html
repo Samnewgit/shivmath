@@ -22,9 +22,20 @@
             font-weight: 700; 
             letter-spacing: -0.04em; 
             
-            /* Sentence case is allowed by default (no text-transform forced) */
-            
             overflow: hidden; /* Prevent double scrollbars */
+        }
+
+        /* --- THE PROMINENT PLUS SIGN --- */
+        .plus-sign {
+            position: fixed;
+            top: 15px; /* Spacing from top edge */
+            left: 40px; /* Aligns with desktop container padding */
+            font-size: 80px; /* Prominent size */
+            line-height: 1;
+            color: #d97656; /* The specific orange color */
+            z-index: 1000; /* Stays on top of everything */
+            pointer-events: none; /* Allows scrolling/clicking even if mouse is over the empty parts of the plus */
+            font-weight: 400; /* Regular weight often looks cleaner for symbols */
         }
 
         /* The Scrollable Container */
@@ -56,7 +67,7 @@
             text-decoration: none;
             color: #262624; 
             
-            /* Animation: Opacity only (No dancing/transform) */
+            /* Animation: Opacity only */
             transition: opacity 0.2s ease;
         }
 
@@ -138,6 +149,12 @@
         /* --- MOBILE OPTIMIZATION --- */
         /* Targets most phones and small tablets */
         @media (max-width: 768px) {
+            
+            /* Align Plus sign with mobile padding */
+            .plus-sign {
+                left: 20px;
+            }
+
             .scroll-container {
                 /* Reduced padding to ensure content fits on small screens */
                 padding: 30vh 20px 80px 20px;
@@ -170,6 +187,9 @@
     </style>
 </head>
 <body>
+
+    <!-- THE PLUS SIGN -->
+    <div class="plus-sign">+</div>
 
     <div class="scroll-container">
 
