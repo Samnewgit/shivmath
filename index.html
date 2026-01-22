@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course selection</title>
+    
+    <style>
+        /* Base Reset */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            
+            /* --- COLOR PALETTE --- */
+            background-color: #c5c5b7;
+            color: #262624;
+            
+            /* --- TYPOGRAPHY: HELVETICA NEUE --- */
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: 700; 
+            letter-spacing: -0.04em; 
+            
+            /* Sentence case is allowed by default (no text-transform forced) */
+            
+            overflow: hidden; /* Prevent double scrollbars */
+        }
+
+        /* The Scrollable Container */
+        .scroll-container {
+            height: 100vh;
+            width: 100%;
+            overflow-y: auto;
+            
+            /* Desktop Layout */
+            padding: 40vh 40px 100px 40px;
+            
+            /* Native momentum scrolling for iOS */
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        /* Hide Scrollbar (Keep minimalist look) */
+        .scroll-container::-webkit-scrollbar { display: none; }
+        .scroll-container { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* --- LINKS & HEADERS --- */
+
+        /* Main Menu Links */
+        .main-link {
+            font-size: 72px; 
+            line-height: 0.95; 
+            cursor: pointer;
+            display: block;
+            margin-bottom: 0px; 
+            text-decoration: none;
+            color: #262624; 
+            
+            /* Animation: Opacity only (No dancing/transform) */
+            transition: opacity 0.2s ease;
+        }
+
+        .main-link:hover {
+            opacity: 0.5;
+        }
+
+        /* Sub-Page Titles (Static) */
+        .page-title {
+            font-size: 72px;
+            line-height: 0.95;
+            margin-bottom: 40px;
+            pointer-events: none;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 20px;
+            margin-top: 60px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #262624; 
+            padding-bottom: 2px;
+            width: fit-content;
+            font-weight: 700;
+            letter-spacing: 0.02em; 
+        }
+
+        /* The Download Links */
+        .resource-link {
+            display: block;
+            font-size: 34px; 
+            font-weight: 500; 
+            line-height: 1.1;
+            text-decoration: none;
+            margin-bottom: 8px;
+            padding-left: 0; 
+            color: #262624;
+            letter-spacing: -0.03em;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Indent slightly on desktop only */
+        @media(min-width: 769px) {
+            .resource-link { padding-left: 4px; }
+        }
+
+        .resource-link:hover {
+            opacity: 0.5;
+        }
+
+        /* Back Button */
+        .back-btn {
+            font-size: 22px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            display: inline-block;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            color: #262624;
+            opacity: 0.6;
+            transition: all 0.2s ease;
+        }
+        .back-btn:hover { 
+            opacity: 1; 
+            border-bottom: 1px solid #262624;
+        }
+
+        /* Detail View Animation */
+        .detail-view {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        /* Targets most phones and small tablets */
+        @media (max-width: 768px) {
+            .scroll-container {
+                /* Reduced padding to ensure content fits on small screens */
+                padding: 30vh 20px 80px 20px;
+            }
+
+            .main-link, .page-title {
+                font-size: 40px; /* Significantly smaller to prevent overflow */
+                line-height: 1.1;
+                margin-bottom: 10px;
+                letter-spacing: -0.03em;
+            }
+
+            .resource-link {
+                font-size: 24px; /* Readable on mobile, easy to tap */
+                line-height: 1.2;
+                margin-bottom: 15px; /* More vertical space for fingers */
+            }
+
+            .section-header {
+                margin-top: 40px;
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+
+            .back-btn {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-container">
+
+        <!-- ================= MAIN MENU ================= -->
+        <div id="main-menu">
+            <div class="main-link" onclick="showPage('page-11sci')">11 Science</div>
+            <div class="main-link" onclick="showPage('page-11com')">11 Commerce</div>
+            <div class="main-link" onclick="showPage('page-12sci')">12 Science</div>
+            <div class="main-link" onclick="showPage('page-12com')">12 Commerce</div>
+        </div>
+
+        <!-- ================= 11 SCIENCE ================= -->
+        <div id="page-11sci" class="detail-view">
+            <div class="back-btn" onclick="goBack()">← Back</div>
+            <h1 class="page-title">11 Science</h1>
+
+            <div class="section-header">Practice resource</div>
+            <!-- PASTE YOUR CLOUDFLARE LINKS IN HREF -->
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/question-bank.pdf" class="resource-link" target="_blank">Question bank</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/permutations.pdf" class="resource-link" target="_blank">Permutation WS</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/COMBINATIONS.pdf" class="resource-link" target="_blank">Combination WS</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/binomial-theorem.pdf" class="resource-link" target="_blank">Binomial theorem</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/3D%20Section%20Formula.pdf" class="resource-link" target="_blank">3D section formula</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/domain-and-range-of-function.pdf" class="resource-link" target="_blank">Domain & range of function</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/Value%20of%20Trig%20Ratios.pdf" class="resource-link" target="_blank">Trigonometric angles</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/circles.pdf" class="resource-link" target="_blank">Circles WS</a>
+		<a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/PT3%20Mathematics%20Worksheet.pdf" class="resource-link" target="_blank">PT3 WS</a>
+
+            <div class="section-header">Learning resource</div>
+            <a href="https://samnewgit.github.io/anglesimulation/" class="resource-link" target="_blank">Angle in degree & radians</a>
+            <a href="http://samnewgit.github.io/trigratio/" class="resource-link" target="_blank">Trigonometric ratio</a>
+            <a href="https://samnewgit.github.io/triggraph/" class="resource-link" target="_blank">Trigonometric graphs</a>
+            <a href="https://samnewgit.github.io/ellipse-eccentricity/" class="resource-link" target="_blank">Ellipse eccentricity</a>
+		<a href="https://www.geogebra.org/m/b6bk3auz" class="resource-link" target="_blank">3D Geometry</a>
+		<a href="https://flashy-poppyseed-094.notion.site/11SCI-Sets-20432a4c15a5800fa960e1e7217be522" class="resource-link" target="_blank">Sets</a>
+		<a href="https://flashy-poppyseed-094.notion.site/11SCI-Probability-20432a4c15a5805480f0e4a03f51e6e1" class="resource-link" target="_blank">Probability</a>
+        </div>
+
+        <!-- ================= 11 COMMERCE ================= -->
+        <div id="page-11com" class="detail-view">
+            <div class="back-btn" onclick="goBack()">← Back</div>
+            <h1 class="page-title">11 Commerce</h1>
+            
+            <div class="section-header">Resources</div>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-commerce/BOAT.pdf" class="resource-link" target="_blank">Boat worksheet</a>
+            <a href="#" class="resource-link" target="_blank">Sample papers</a>
+        </div>
+
+        <!-- ================= 12 SCIENCE ================= -->
+        <div id="page-12sci" class="detail-view">
+            <div class="back-btn" onclick="goBack()">← Back</div>
+            <h1 class="page-title">12 Science</h1>
+
+            <div class="section-header">Resources</div>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/12th%20Support%20Material%20DOE%20Delhi.pdf" class="resource-link" target="_blank">Support material</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/MTG.pdf" class="resource-link" target="_blank">MTG question bank</a>
+            <a href="https://drive.google.com/file/d/16Je9yiyprS06jnGP3enlC1BM2ljnXVQe/view" class="resource-link" target="_blank">Shivdas competency based questions</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/Board%20QB.pdf" class="resource-link" target="_blank">Board question bank (March 24 & 25)</a>
+        </div>
+
+        <!-- ================= 12 COMMERCE ================= -->
+        <div id="page-12com" class="detail-view">
+            <div class="back-btn" onclick="goBack()">← Back</div>
+            <h1 class="page-title">12 Commerce</h1>
+
+            <div class="section-header">Resources</div>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Oswaal%20QB%20Chapterwise.pdf" class="resource-link" target="_blank">Oswaal QB</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Bond%20Valuation.pdf" class="resource-link" target="_blank">Bond valuation</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Hypothesis.pdf" class="resource-link" target="_blank">Hypothesis theory</a>
+            <a href="https://appliedmaths.site/" class="resource-link" target="_blank">Board question bank (All years)</a>
+        </div>
+
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide Menu
+            document.getElementById('main-menu').style.display = 'none';
+            
+            // Hide all pages
+            const pages = document.querySelectorAll('.detail-view');
+            pages.forEach(page => page.style.display = 'none');
+
+            // Show selected page
+            document.getElementById(pageId).style.display = 'block';
+
+            // Reset scroll to top
+            document.querySelector('.scroll-container').scrollTop = 0;
+            
+            // Adjust padding for content view
+            // Desktop gets more space (100px), Mobile gets less (80px) to maximize screen
+            if (window.innerWidth <= 768) {
+                document.querySelector('.scroll-container').style.paddingTop = "80px";
+            } else {
+                document.querySelector('.scroll-container').style.paddingTop = "100px";
+            }
+        }
+
+        function goBack() {
+            // Hide pages
+            const pages = document.querySelectorAll('.detail-view');
+            pages.forEach(page => page.style.display = 'none');
+
+            // Show Menu
+            document.getElementById('main-menu').style.display = 'block';
+
+            // Restore artistic top padding
+            // Checks screen size to return to the correct "initial" look
+            if (window.innerWidth <= 768) {
+                document.querySelector('.scroll-container').style.paddingTop = "30vh";
+            } else {
+                document.querySelector('.scroll-container').style.paddingTop = "40vh";
+            }
+        }
+    </script>
+
+</body>
+</html>
