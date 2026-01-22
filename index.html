@@ -25,17 +25,30 @@
             overflow: hidden; /* Prevent double scrollbars */
         }
 
-        /* --- THE PROMINENT PLUS SIGN --- */
-        .plus-sign {
+        /* --- THE FIXED HEADER MASK (The Box under the Plus) --- */
+        .header-mask {
             position: fixed;
-            top: 15px; /* Spacing from top edge */
-            left: 40px; /* Aligns with desktop container padding */
-            font-size: 80px; /* Prominent size */
-            line-height: 1;
-            color: #d97656; /* The specific orange color */
-            z-index: 1000; /* Stays on top of everything */
-            pointer-events: none; /* Allows scrolling/clicking even if mouse is over the empty parts of the plus */
-            font-weight: 400; /* Regular weight often looks cleaner for symbols */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px; /* Height of the masking box */
+            background-color: #c5c5b7; /* Matches body background to hide scrolling text */
+            display: flex;
+            justify-content: center; /* Centers the Plus Sign horizontally */
+            align-items: center;     /* Centers vertically */
+            z-index: 1000;           /* Stays on top of scrolling text */
+            
+            /* Optional shadow to separate header, currently removed for flat look */
+            /* box-shadow: 0 10px 20px -10px rgba(0,0,0,0.1); */ 
+        }
+
+        .plus-sign {
+            font-size: 80px; 
+            line-height: 0;      /* Removes extra height spacing */
+            padding-bottom: 10px; /* Optical adjustment to center the cross */
+            color: #d97656;      /* Orange color */
+            font-weight: 400;    /* Regular weight for clean symbol */
+            pointer-events: none;
         }
 
         /* The Scrollable Container */
@@ -45,19 +58,19 @@
             overflow-y: auto;
             
             /* Desktop Layout */
+            /* Top padding matches whitespace preference */
             padding: 40vh 40px 100px 40px;
             
             /* Native momentum scrolling for iOS */
             -webkit-overflow-scrolling: touch; 
         }
 
-        /* Hide Scrollbar (Keep minimalist look) */
+        /* Hide Scrollbar */
         .scroll-container::-webkit-scrollbar { display: none; }
         .scroll-container { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* --- LINKS & HEADERS --- */
 
-        /* Main Menu Links */
         .main-link {
             font-size: 72px; 
             line-height: 0.95; 
@@ -66,8 +79,6 @@
             margin-bottom: 0px; 
             text-decoration: none;
             color: #262624; 
-            
-            /* Animation: Opacity only */
             transition: opacity 0.2s ease;
         }
 
@@ -75,7 +86,6 @@
             opacity: 0.5;
         }
 
-        /* Sub-Page Titles (Static) */
         .page-title {
             font-size: 72px;
             line-height: 0.95;
@@ -83,7 +93,6 @@
             pointer-events: none;
         }
 
-        /* Section Headers */
         .section-header {
             font-size: 20px;
             margin-top: 60px;
@@ -95,7 +104,6 @@
             letter-spacing: 0.02em; 
         }
 
-        /* The Download Links */
         .resource-link {
             display: block;
             font-size: 34px; 
@@ -109,7 +117,6 @@
             transition: opacity 0.2s ease;
         }
 
-        /* Indent slightly on desktop only */
         @media(min-width: 769px) {
             .resource-link { padding-left: 4px; }
         }
@@ -118,7 +125,6 @@
             opacity: 0.5;
         }
 
-        /* Back Button */
         .back-btn {
             font-size: 22px;
             cursor: pointer;
@@ -135,7 +141,6 @@
             border-bottom: 1px solid #262624;
         }
 
-        /* Detail View Animation */
         .detail-view {
             display: none;
             animation: fadeIn 0.4s ease;
@@ -147,30 +152,31 @@
         }
 
         /* --- MOBILE OPTIMIZATION --- */
-        /* Targets most phones and small tablets */
         @media (max-width: 768px) {
+            /* Make header slightly smaller on mobile to save space */
+            .header-mask {
+                height: 80px;
+            }
             
-            /* Align Plus sign with mobile padding */
             .plus-sign {
-                left: 20px;
+                font-size: 60px;
             }
 
             .scroll-container {
-                /* Reduced padding to ensure content fits on small screens */
                 padding: 30vh 20px 80px 20px;
             }
 
             .main-link, .page-title {
-                font-size: 40px; /* Significantly smaller to prevent overflow */
+                font-size: 40px; 
                 line-height: 1.1;
                 margin-bottom: 10px;
                 letter-spacing: -0.03em;
             }
 
             .resource-link {
-                font-size: 24px; /* Readable on mobile, easy to tap */
+                font-size: 24px; 
                 line-height: 1.2;
-                margin-bottom: 15px; /* More vertical space for fingers */
+                margin-bottom: 15px; 
             }
 
             .section-header {
@@ -188,8 +194,10 @@
 </head>
 <body>
 
-    <!-- THE PLUS SIGN -->
-    <div class="plus-sign">+</div>
+    <!-- THE HEADER MASK (Box with Plus Sign) -->
+    <div class="header-mask">
+        <div class="plus-sign">+</div>
+    </div>
 
     <div class="scroll-container">
 
@@ -207,7 +215,6 @@
             <h1 class="page-title">11 Science</h1>
 
             <div class="section-header">Practice resource</div>
-            <!-- PASTE YOUR CLOUDFLARE LINKS IN HREF -->
             <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/question-bank.pdf" class="resource-link" target="_blank">Question bank</a>
             <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/permutations.pdf" class="resource-link" target="_blank">Permutation WS</a>
             <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/COMBINATIONS.pdf" class="resource-link" target="_blank">Combination WS</a>
@@ -216,16 +223,16 @@
             <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/domain-and-range-of-function.pdf" class="resource-link" target="_blank">Domain & range of function</a>
             <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/Value%20of%20Trig%20Ratios.pdf" class="resource-link" target="_blank">Trigonometric angles</a>
             <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/circles.pdf" class="resource-link" target="_blank">Circles WS</a>
-		<a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/PT3%20Mathematics%20Worksheet.pdf" class="resource-link" target="_blank">PT3 WS</a>
+            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/PT3%20Mathematics%20Worksheet.pdf" class="resource-link" target="_blank">PT3 WS</a>
 
             <div class="section-header">Learning resource</div>
             <a href="https://samnewgit.github.io/anglesimulation/" class="resource-link" target="_blank">Angle in degree & radians</a>
             <a href="http://samnewgit.github.io/trigratio/" class="resource-link" target="_blank">Trigonometric ratio</a>
             <a href="https://samnewgit.github.io/triggraph/" class="resource-link" target="_blank">Trigonometric graphs</a>
             <a href="https://samnewgit.github.io/ellipse-eccentricity/" class="resource-link" target="_blank">Ellipse eccentricity</a>
-		<a href="https://www.geogebra.org/m/b6bk3auz" class="resource-link" target="_blank">3D Geometry</a>
-		<a href="https://flashy-poppyseed-094.notion.site/11SCI-Sets-20432a4c15a5800fa960e1e7217be522" class="resource-link" target="_blank">Sets</a>
-		<a href="https://flashy-poppyseed-094.notion.site/11SCI-Probability-20432a4c15a5805480f0e4a03f51e6e1" class="resource-link" target="_blank">Probability</a>
+            <a href="https://www.geogebra.org/m/b6bk3auz" class="resource-link" target="_blank">3D Geometry</a>
+            <a href="https://flashy-poppyseed-094.notion.site/11SCI-Sets-20432a4c15a5800fa960e1e7217be522" class="resource-link" target="_blank">Sets</a>
+            <a href="https://flashy-poppyseed-094.notion.site/11SCI-Probability-20432a4c15a5805480f0e4a03f51e6e1" class="resource-link" target="_blank">Probability</a>
         </div>
 
         <!-- ================= 11 COMMERCE ================= -->
@@ -279,12 +286,16 @@
             // Reset scroll to top
             document.querySelector('.scroll-container').scrollTop = 0;
             
-            // Adjust padding for content view
-            // Desktop gets more space (100px), Mobile gets less (80px) to maximize screen
+            // ADJUST PADDING: 
+            // We need extra top padding here so the Back button and content 
+            // start BELOW the fixed header mask.
+            // Desktop Header is 100px, so we need > 100px.
+            // Mobile Header is 80px, so we need > 80px.
+            
             if (window.innerWidth <= 768) {
-                document.querySelector('.scroll-container').style.paddingTop = "80px";
+                document.querySelector('.scroll-container').style.paddingTop = "110px"; // 80px mask + 30px buffer
             } else {
-                document.querySelector('.scroll-container').style.paddingTop = "100px";
+                document.querySelector('.scroll-container').style.paddingTop = "140px"; // 100px mask + 40px buffer
             }
         }
 
@@ -296,8 +307,7 @@
             // Show Menu
             document.getElementById('main-menu').style.display = 'block';
 
-            // Restore artistic top padding
-            // Checks screen size to return to the correct "initial" look
+            // Restore artistic top padding for Home View (pushes content down further)
             if (window.innerWidth <= 768) {
                 document.querySelector('.scroll-container').style.paddingTop = "30vh";
             } else {
