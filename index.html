@@ -22,7 +22,7 @@
             font-weight: 700; 
             letter-spacing: -0.04em; 
             
-            overflow: hidden; /* Prevent double scrollbars */
+            overflow: hidden; 
         }
 
         /* --- THE FIXED HEADER MASK (The Box under the Plus) --- */
@@ -31,23 +31,20 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100px; /* Height of the masking box */
-            background-color: #c5c5b7; /* Matches body background to hide scrolling text */
+            height: 100px; 
+            background-color: #c5c5b7; /* Matches body background */
             display: flex;
-            justify-content: center; /* Centers the Plus Sign horizontally */
-            align-items: center;     /* Centers vertically */
-            z-index: 1000;           /* Stays on top of scrolling text */
-            
-            /* Optional shadow to separate header, currently removed for flat look */
-            /* box-shadow: 0 10px 20px -10px rgba(0,0,0,0.1); */ 
+            justify-content: center; 
+            align-items: center;     
+            z-index: 1000;           
         }
 
         .plus-sign {
             font-size: 80px; 
-            line-height: 0;      /* Removes extra height spacing */
-            padding-bottom: 10px; /* Optical adjustment to center the cross */
-            color: #d97656;      /* Orange color */
-            font-weight: 400;    /* Regular weight for clean symbol */
+            line-height: 0;      
+            padding-bottom: 10px; 
+            color: #d97656;      
+            font-weight: 400;    
             pointer-events: none;
         }
 
@@ -56,13 +53,18 @@
             height: 100vh;
             width: 100%;
             overflow-y: auto;
-            
-            /* Desktop Layout */
-            /* Top padding matches whitespace preference */
-            padding: 40vh 40px 100px 40px;
-            
-            /* Native momentum scrolling for iOS */
             -webkit-overflow-scrolling: touch; 
+            
+            /* Padding for scroll area */
+            padding-top: 40vh;
+            padding-bottom: 100px;
+        }
+
+        /* --- LAYOUT WRAPPER (Centers content & Controls Margins) --- */
+        .content-wrapper {
+            width: 90%;          /* Leaves 5% margin on left and right on mobile/tablets */
+            max-width: 900px;    /* Prevents it from getting too wide on Desktop */
+            margin: 0 auto;      /* This centers the block horizontally */
         }
 
         /* Hide Scrollbar */
@@ -72,11 +74,11 @@
         /* --- LINKS & HEADERS --- */
 
         .main-link {
-            font-size: 72px; 
-            line-height: 0.95; 
+            font-size: 54px; /* Reduced from 72px for better sizing */
+            line-height: 1.0; 
             cursor: pointer;
             display: block;
-            margin-bottom: 0px; 
+            margin-bottom: 10px; 
             text-decoration: none;
             color: #262624; 
             transition: opacity 0.2s ease;
@@ -87,15 +89,15 @@
         }
 
         .page-title {
-            font-size: 72px;
-            line-height: 0.95;
+            font-size: 54px; /* Reduced from 72px */
+            line-height: 1.0;
             margin-bottom: 40px;
             pointer-events: none;
         }
 
         .section-header {
-            font-size: 20px;
-            margin-top: 60px;
+            font-size: 18px;
+            margin-top: 50px;
             margin-bottom: 20px;
             border-bottom: 2px solid #262624; 
             padding-bottom: 2px;
@@ -106,9 +108,9 @@
 
         .resource-link {
             display: block;
-            font-size: 34px; 
+            font-size: 28px; /* Reduced from 34px */
             font-weight: 500; 
-            line-height: 1.1;
+            line-height: 1.2;
             text-decoration: none;
             margin-bottom: 8px;
             padding-left: 0; 
@@ -117,8 +119,9 @@
             transition: opacity 0.2s ease;
         }
 
+        /* Small indent for links only on desktop */
         @media(min-width: 769px) {
-            .resource-link { padding-left: 4px; }
+            .resource-link { padding-left: 0; /* Removing extra indent to keep alignment clean in center mode */ }
         }
 
         .resource-link:hover {
@@ -126,7 +129,7 @@
         }
 
         .back-btn {
-            font-size: 22px;
+            font-size: 20px;
             cursor: pointer;
             margin-bottom: 30px;
             display: inline-block;
@@ -153,7 +156,6 @@
 
         /* --- MOBILE OPTIMIZATION --- */
         @media (max-width: 768px) {
-            /* Make header slightly smaller on mobile to save space */
             .header-mask {
                 height: 80px;
             }
@@ -162,20 +164,15 @@
                 font-size: 60px;
             }
 
-            .scroll-container {
-                padding: 30vh 20px 80px 20px;
-            }
-
+            /* On mobile, we keep font sizes manageable */
             .main-link, .page-title {
                 font-size: 40px; 
                 line-height: 1.1;
                 margin-bottom: 10px;
-                letter-spacing: -0.03em;
             }
 
             .resource-link {
                 font-size: 24px; 
-                line-height: 1.2;
                 margin-bottom: 15px; 
             }
 
@@ -183,11 +180,6 @@
                 margin-top: 40px;
                 font-size: 16px;
                 margin-bottom: 15px;
-            }
-
-            .back-btn {
-                font-size: 18px;
-                margin-bottom: 20px;
             }
         }
     </style>
@@ -200,114 +192,106 @@
     </div>
 
     <div class="scroll-container">
+        <!-- Content Wrapper ensures everything is centered with equal margins -->
+        <div class="content-wrapper">
 
-        <!-- ================= MAIN MENU ================= -->
-        <div id="main-menu">
-            <div class="main-link" onclick="showPage('page-11sci')">11 Science</div>
-            <div class="main-link" onclick="showPage('page-11com')">11 Commerce</div>
-            <div class="main-link" onclick="showPage('page-12sci')">12 Science</div>
-            <div class="main-link" onclick="showPage('page-12com')">12 Commerce</div>
-        </div>
+            <!-- ================= MAIN MENU ================= -->
+            <div id="main-menu">
+                <div class="main-link" onclick="showPage('page-11sci')">11 Science</div>
+                <div class="main-link" onclick="showPage('page-11com')">11 Commerce</div>
+                <div class="main-link" onclick="showPage('page-12sci')">12 Science</div>
+                <div class="main-link" onclick="showPage('page-12com')">12 Commerce</div>
+            </div>
 
-        <!-- ================= 11 SCIENCE ================= -->
-        <div id="page-11sci" class="detail-view">
-            <div class="back-btn" onclick="goBack()">← Back</div>
-            <h1 class="page-title">11 Science</h1>
+            <!-- ================= 11 SCIENCE ================= -->
+            <div id="page-11sci" class="detail-view">
+                <div class="back-btn" onclick="goBack()">← Back</div>
+                <h1 class="page-title">11 Science</h1>
 
-            <div class="section-header">Practice resource</div>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/question-bank.pdf" class="resource-link" target="_blank">Question bank</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/permutations.pdf" class="resource-link" target="_blank">Permutation WS</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/COMBINATIONS.pdf" class="resource-link" target="_blank">Combination WS</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/binomial-theorem.pdf" class="resource-link" target="_blank">Binomial theorem</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/3D%20Section%20Formula.pdf" class="resource-link" target="_blank">3D section formula</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/domain-and-range-of-function.pdf" class="resource-link" target="_blank">Domain & range of function</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/Value%20of%20Trig%20Ratios.pdf" class="resource-link" target="_blank">Trigonometric angles</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/circles.pdf" class="resource-link" target="_blank">Circles WS</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/PT3%20Mathematics%20Worksheet.pdf" class="resource-link" target="_blank">PT3 WS</a>
+                <div class="section-header">Practice resource</div>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/question-bank.pdf" class="resource-link" target="_blank">Question bank</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/permutations.pdf" class="resource-link" target="_blank">Permutation WS</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/COMBINATIONS.pdf" class="resource-link" target="_blank">Combination WS</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/binomial-theorem.pdf" class="resource-link" target="_blank">Binomial theorem</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/3D%20Section%20Formula.pdf" class="resource-link" target="_blank">3D section formula</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/domain-and-range-of-function.pdf" class="resource-link" target="_blank">Domain & range of function</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/Value%20of%20Trig%20Ratios.pdf" class="resource-link" target="_blank">Trigonometric angles</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/circles.pdf" class="resource-link" target="_blank">Circles WS</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/PT3%20Mathematics%20Worksheet.pdf" class="resource-link" target="_blank">PT3 WS</a>
 
-            <div class="section-header">Learning resource</div>
-            <a href="https://samnewgit.github.io/anglesimulation/" class="resource-link" target="_blank">Angle in degree & radians</a>
-            <a href="http://samnewgit.github.io/trigratio/" class="resource-link" target="_blank">Trigonometric ratio</a>
-            <a href="https://samnewgit.github.io/triggraph/" class="resource-link" target="_blank">Trigonometric graphs</a>
-            <a href="https://samnewgit.github.io/ellipse-eccentricity/" class="resource-link" target="_blank">Ellipse eccentricity</a>
-            <a href="https://www.geogebra.org/m/b6bk3auz" class="resource-link" target="_blank">3D Geometry</a>
-            <a href="https://flashy-poppyseed-094.notion.site/11SCI-Sets-20432a4c15a5800fa960e1e7217be522" class="resource-link" target="_blank">Sets</a>
-            <a href="https://flashy-poppyseed-094.notion.site/11SCI-Probability-20432a4c15a5805480f0e4a03f51e6e1" class="resource-link" target="_blank">Probability</a>
-        </div>
+                <div class="section-header">Learning resource</div>
+                <a href="https://samnewgit.github.io/anglesimulation/" class="resource-link" target="_blank">Angle in degree & radians</a>
+                <a href="http://samnewgit.github.io/trigratio/" class="resource-link" target="_blank">Trigonometric ratio</a>
+                <a href="https://samnewgit.github.io/triggraph/" class="resource-link" target="_blank">Trigonometric graphs</a>
+                <a href="https://samnewgit.github.io/ellipse-eccentricity/" class="resource-link" target="_blank">Ellipse eccentricity</a>
+                <a href="https://www.geogebra.org/m/b6bk3auz" class="resource-link" target="_blank">3D Geometry</a>
+                <a href="https://flashy-poppyseed-094.notion.site/11SCI-Sets-20432a4c15a5800fa960e1e7217be522" class="resource-link" target="_blank">Sets</a>
+                <a href="https://flashy-poppyseed-094.notion.site/11SCI-Probability-20432a4c15a5805480f0e4a03f51e6e1" class="resource-link" target="_blank">Probability</a>
+            </div>
 
-        <!-- ================= 11 COMMERCE ================= -->
-        <div id="page-11com" class="detail-view">
-            <div class="back-btn" onclick="goBack()">← Back</div>
-            <h1 class="page-title">11 Commerce</h1>
+            <!-- ================= 11 COMMERCE ================= -->
+            <div id="page-11com" class="detail-view">
+                <div class="back-btn" onclick="goBack()">← Back</div>
+                <h1 class="page-title">11 Commerce</h1>
+                
+                <div class="section-header">Resources</div>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-commerce/BOAT.pdf" class="resource-link" target="_blank">Boat worksheet</a>
+                <a href="#" class="resource-link" target="_blank">Sample papers</a>
+            </div>
+
+            <!-- ================= 12 SCIENCE ================= -->
+            <div id="page-12sci" class="detail-view">
+                <div class="back-btn" onclick="goBack()">← Back</div>
+                <h1 class="page-title">12 Science</h1>
+
+                <div class="section-header">Resources</div>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/12th%20Support%20Material%20DOE%20Delhi.pdf" class="resource-link" target="_blank">Support material</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/MTG.pdf" class="resource-link" target="_blank">MTG question bank</a>
+                <a href="https://drive.google.com/file/d/16Je9yiyprS06jnGP3enlC1BM2ljnXVQe/view" class="resource-link" target="_blank">Shivdas competency based questions</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/Board%20QB.pdf" class="resource-link" target="_blank">Board question bank (March 24 & 25)</a>
+            </div>
+
+            <!-- ================= 12 COMMERCE ================= -->
+            <div id="page-12com" class="detail-view">
+                <div class="back-btn" onclick="goBack()">← Back</div>
+                <h1 class="page-title">12 Commerce</h1>
+
+                <div class="section-header">Resources</div>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Oswaal%20QB%20Chapterwise.pdf" class="resource-link" target="_blank">Oswaal QB</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Bond%20Valuation.pdf" class="resource-link" target="_blank">Bond valuation</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Hypothesis.pdf" class="resource-link" target="_blank">Hypothesis theory</a>
+                <a href="https://appliedmaths.site/" class="resource-link" target="_blank">Board question bank (All years)</a>
+            </div>
             
-            <div class="section-header">Resources</div>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-commerce/BOAT.pdf" class="resource-link" target="_blank">Boat worksheet</a>
-            <a href="#" class="resource-link" target="_blank">Sample papers</a>
-        </div>
-
-        <!-- ================= 12 SCIENCE ================= -->
-        <div id="page-12sci" class="detail-view">
-            <div class="back-btn" onclick="goBack()">← Back</div>
-            <h1 class="page-title">12 Science</h1>
-
-            <div class="section-header">Resources</div>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/12th%20Support%20Material%20DOE%20Delhi.pdf" class="resource-link" target="_blank">Support material</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/MTG.pdf" class="resource-link" target="_blank">MTG question bank</a>
-            <a href="https://drive.google.com/file/d/16Je9yiyprS06jnGP3enlC1BM2ljnXVQe/view" class="resource-link" target="_blank">Shivdas competency based questions</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/Board%20QB.pdf" class="resource-link" target="_blank">Board question bank (March 24 & 25)</a>
-        </div>
-
-        <!-- ================= 12 COMMERCE ================= -->
-        <div id="page-12com" class="detail-view">
-            <div class="back-btn" onclick="goBack()">← Back</div>
-            <h1 class="page-title">12 Commerce</h1>
-
-            <div class="section-header">Resources</div>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Oswaal%20QB%20Chapterwise.pdf" class="resource-link" target="_blank">Oswaal QB</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Bond%20Valuation.pdf" class="resource-link" target="_blank">Bond valuation</a>
-            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Hypothesis.pdf" class="resource-link" target="_blank">Hypothesis theory</a>
-            <a href="https://appliedmaths.site/" class="resource-link" target="_blank">Board question bank (All years)</a>
-        </div>
-
+        </div> <!-- End content wrapper -->
     </div>
 
     <script>
         function showPage(pageId) {
-            // Hide Menu
             document.getElementById('main-menu').style.display = 'none';
             
-            // Hide all pages
             const pages = document.querySelectorAll('.detail-view');
             pages.forEach(page => page.style.display = 'none');
 
-            // Show selected page
             document.getElementById(pageId).style.display = 'block';
 
-            // Reset scroll to top
             document.querySelector('.scroll-container').scrollTop = 0;
             
-            // ADJUST PADDING: 
-            // We need extra top padding here so the Back button and content 
-            // start BELOW the fixed header mask.
-            // Desktop Header is 100px, so we need > 100px.
-            // Mobile Header is 80px, so we need > 80px.
-            
+            // Adjust padding for content view to avoid overlap with header mask
             if (window.innerWidth <= 768) {
-                document.querySelector('.scroll-container').style.paddingTop = "110px"; // 80px mask + 30px buffer
+                document.querySelector('.scroll-container').style.paddingTop = "110px"; 
             } else {
-                document.querySelector('.scroll-container').style.paddingTop = "140px"; // 100px mask + 40px buffer
+                document.querySelector('.scroll-container').style.paddingTop = "140px"; 
             }
         }
 
         function goBack() {
-            // Hide pages
             const pages = document.querySelectorAll('.detail-view');
             pages.forEach(page => page.style.display = 'none');
 
-            // Show Menu
             document.getElementById('main-menu').style.display = 'block';
 
-            // Restore artistic top padding for Home View (pushes content down further)
+            // Restore artistic top padding for the home screen
             if (window.innerWidth <= 768) {
                 document.querySelector('.scroll-container').style.paddingTop = "30vh";
             } else {
