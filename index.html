@@ -128,6 +128,34 @@
             opacity: 0.5;
         }
 
+        /* --- TAG STYLES FOR PDF AND LINK --- */
+        .tag-pdf, .tag-link {
+            display: inline-block;
+            margin-right: 12px;  /* Space between tag and title */
+            font-size: 0.6em;
+            vertical-align: middle;
+            padding: 3px 6px;
+            border-radius: 2px;
+            line-height: 1;
+        }
+
+        .tag-pdf {
+            font-family: "Courier New", Courier, monospace; /* Monospace for PDF - technical feel */
+            background-color: #d97656;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .tag-link {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Same family but different style */
+            background-color: #262624;
+            color: #c5c5b7;
+            font-weight: 500;
+            font-style: italic;
+            letter-spacing: 0.02em;
+        }
+
         .back-btn {
             font-size: 20px;
             cursor: pointer;
@@ -181,6 +209,12 @@
                 font-size: 16px;
                 margin-bottom: 15px;
             }
+
+            .tag-pdf, .tag-link {
+                font-size: 0.65em;
+                margin-right: 8px;
+                padding: 2px 4px;
+            }
         }
     </style>
 </head>
@@ -209,28 +243,27 @@
                 <h1 class="page-title">11 Science</h1>
 
                 <div class="section-header">Practice resource</div>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/question-bank.pdf" class="resource-link" target="_blank">Question bank</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/permutations.pdf" class="resource-link" target="_blank">Permutation WS</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/COMBINATIONS.pdf" class="resource-link" target="_blank">Combination WS</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/binomial-theorem.pdf" class="resource-link" target="_blank">Binomial theorem</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/3D%20Section%20Formula.pdf" class="resource-link" target="_blank">3D section formula</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/domain-and-range-of-function.pdf" class="resource-link" target="_blank">Domain & range of function</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/Value%20of%20Trig%20Ratios.pdf" class="resource-link" target="_blank">Trigonometric angles</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/circles.pdf" class="resource-link" target="_blank">Circles WS</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/PT3%20Mathematics%20Worksheet.pdf" class="resource-link" target="_blank">PT3 WS</a>
-                <a href="https://kumarsir34.wordpress.com/%f0%9f%91%89maths-class-xi/" class="resource-link" target="_blank">Annual Sample Paper 1</a>
-                <a href="https://docs.google.com/document/d/1RixJESE2gh48lHGtp2EOSSXuN6s773tE/edit" class="resource-link" target="_blank">Annual Sample Paper 2</a>
-                <a href="https://davschoolmalout.org/File/424/NoticeBoard_ff2de4bf-5868-45b2-b772-89609bcea723_SAMPLE%20PAPER%20MATHS.pdf" class="resource-link" target="_blank">Annual Sample Paper 3</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/question-bank.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Question bank</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/permutations.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Permutation WS</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/COMBINATIONS.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Combination WS</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/binomial-theorem.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Binomial theorem</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/3D%20Section%20Formula.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>3D section formula</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/domain-and-range-of-function.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Domain & range of function</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/Value%20of%20Trig%20Ratios.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Trigonometric angles</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/circles.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Circles WS</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/PT3%20Mathematics%20Worksheet.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>PT3 WS</a>
+                <a href="https://kumarsir34.wordpress.com/%f0%9f%91%89maths-class-xi/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Annual Sample Paper 1</a>
+                <a href="https://docs.google.com/document/d/1RixJESE2gh48lHGtp2EOSSXuN6s773tE/edit" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Annual Sample Paper 2</a>
+                <a href="https://davschoolmalout.org/File/424/NoticeBoard_ff2de4bf-5868-45b2-b772-89609bcea723_SAMPLE%20PAPER%20MATHS.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Annual Sample Paper 3</a>
 
-                
                 <div class="section-header">Learning resource</div>
-                <a href="https://samnewgit.github.io/anglesimulation/" class="resource-link" target="_blank">Angle in degree & radians</a>
-                <a href="http://samnewgit.github.io/trigratio/" class="resource-link" target="_blank">Trigonometric ratio</a>
-                <a href="https://samnewgit.github.io/triggraph/" class="resource-link" target="_blank">Trigonometric graphs</a>
-                <a href="https://samnewgit.github.io/ellipse-eccentricity/" class="resource-link" target="_blank">Ellipse eccentricity</a>
-                <a href="https://www.geogebra.org/m/b6bk3auz" class="resource-link" target="_blank">3D Geometry</a>
-                <a href="https://flashy-poppyseed-094.notion.site/11SCI-Sets-20432a4c15a5800fa960e1e7217be522" class="resource-link" target="_blank">Sets</a>
-                <a href="https://flashy-poppyseed-094.notion.site/11SCI-Probability-20432a4c15a5805480f0e4a03f51e6e1" class="resource-link" target="_blank">Probability</a>
+                <a href="https://samnewgit.github.io/anglesimulation/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Angle in degree & radians</a>
+                <a href="http://samnewgit.github.io/trigratio/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Trigonometric ratio</a>
+                <a href="https://samnewgit.github.io/triggraph/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Trigonometric graphs</a>
+                <a href="https://samnewgit.github.io/ellipse-eccentricity/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Ellipse eccentricity</a>
+                <a href="https://www.geogebra.org/m/b6bk3auz" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>3D Geometry</a>
+                <a href="https://flashy-poppyseed-094.notion.site/11SCI-Sets-20432a4c15a5800fa960e1e7217be522" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Sets</a>
+                <a href="https://flashy-poppyseed-094.notion.site/11SCI-Probability-20432a4c15a5805480f0e4a03f51e6e1" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Probability</a>
             </div>
 
             <!-- ================= 11 COMMERCE ================= -->
@@ -239,11 +272,11 @@
                 <h1 class="page-title">11 Commerce</h1>
                 
                 <div class="section-header">Resources</div>
-                <a href="https://cbseacademic.nic.in/web_material/Manuals/Applied_Mathemathics.pdf" class="resource-link" target="_blank">Applied Maths Book(CBSE)</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-commerce/BOAT.pdf" class="resource-link" target="_blank">Boat worksheet</a>
-                <a href="https://davhaldwani.edu.in/File/5652/AppliedMaths_XI_2022-23.pdf" class="resource-link" target="_blank">Sample Paper 1</a>
-                <a href="https://davbr.org/File/4554/CYJ_PP_XI_AP-MATHS.pdf" class="resource-link" target="_blank">Sample Paper 2</a>
-                <a href="https://mycbseguide.com/blog/cbse-class-11-applied-maths-sample-papers/" class="resource-link" target="_blank">Sample Paper 3</a>
+                <a href="https://cbseacademic.nic.in/web_material/Manuals/Applied_Mathemathics.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Applied Maths Book(CBSE)</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-commerce/BOAT.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Boat worksheet</a>
+                <a href="https://davhaldwani.edu.in/File/5652/AppliedMaths_XI_2022-23.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Sample Paper 1</a>
+                <a href="https://davbr.org/File/4554/CYJ_PP_XI_AP-MATHS.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Sample Paper 2</a>
+                <a href="https://mycbseguide.com/blog/cbse-class-11-applied-maths-sample-papers/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Sample Paper 3</a>
             </div>
 
             <!-- ================= 12 SCIENCE ================= -->
@@ -252,10 +285,10 @@
                 <h1 class="page-title">12 Science</h1>
 
                 <div class="section-header">Resources</div>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/12th%20Support%20Material%20DOE%20Delhi.pdf" class="resource-link" target="_blank">Support Material</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/MTG.pdf" class="resource-link" target="_blank">MTG question bank</a>
-                <a href="https://drive.google.com/file/d/16Je9yiyprS06jnGP3enlC1BM2ljnXVQe/view" class="resource-link" target="_blank">Shivdas competency based questions</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/Board%20QB.pdf" class="resource-link" target="_blank">Board question bank (March 24 & 25)</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/12th%20Support%20Material%20DOE%20Delhi.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Support Material</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/MTG.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>MTG question bank</a>
+                <a href="https://drive.google.com/file/d/16Je9yiyprS06jnGP3enlC1BM2ljnXVQe/view" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Shivdas competency based questions</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/Board%20QB.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Board question bank (March 24 & 25)</a>
             </div>
 
             <!-- ================= 12 COMMERCE ================= -->
@@ -264,11 +297,11 @@
                 <h1 class="page-title">12 Commerce</h1>
 
                 <div class="section-header">Resources</div>
-                 <a href="https://cbseacademic.nic.in/web_material/Manuals/Book%20_Applied_Mathematics_ClassXII.pdf" class="resource-link" target="_blank">Applied Maths Book(CBSE)</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Oswaal%20QB%20Chapterwise.pdf" class="resource-link" target="_blank">Oswaal QB</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Bond%20Valuation.pdf" class="resource-link" target="_blank">Bond valuation</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Hypothesis.pdf" class="resource-link" target="_blank">Hypothesis theory</a>
-                <a href="https://appliedmaths.site/" class="resource-link" target="_blank">Board question bank (All years)</a>
+                <a href="https://cbseacademic.nic.in/web_material/Manuals/Book%20_Applied_Mathematics_ClassXII.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Applied Maths Book(CBSE)</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Oswaal%20QB%20Chapterwise.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Oswaal QB</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Bond%20Valuation.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Bond valuation</a>
+                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Hypothesis.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Hypothesis theory</a>
+                <a href="https://appliedmaths.site/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Board question bank (All years)</a>
             </div>
             
         </div> <!-- End content wrapper -->
