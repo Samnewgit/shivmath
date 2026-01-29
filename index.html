@@ -4,341 +4,1128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shiv's Classroom</title>
-    
     <style>
-        /* Base Reset */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body, html {
-            height: 100%;
-            width: 100%;
+        :root {
+            --color-bg: #ffffff;
+            --color-surface: #ffffff;
+            --color-surface-accent: #9c3418; 
+            --color-text-main: #000000;
+            --color-text-inv: #ffffff;
+            --color-border: #000000;
             
-            /* --- COLOR PALETTE --- */
-            background-color: #c5c5b7;
-            color: #262624;
+            --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             
-            /* --- TYPOGRAPHY: HELVETICA NEUE --- */
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-weight: 700; 
-            letter-spacing: -0.04em; 
+            --radius-pill: 100px; 
+            --radius-card: 24px;  
+            --radius-sm: 12px;
             
-            overflow: hidden; 
+            --border-width: 1.5px;
+            
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2.5rem;
+            --space-xl: 4rem;
         }
 
-        /* --- THE FIXED HEADER MASK (The Box under the Plus) --- */
-        .header-mask {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100px; 
-            background-color: #c5c5b7; /* Matches body background */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-bg);
+            color: var(--color-text-main);
+            line-height: 1.4;
+            min-height: 100vh;
             display: flex;
-            justify-content: center; 
-            align-items: center;     
-            z-index: 1000;           
+            flex-direction: column;
         }
 
-        .plus-sign {
-            font-size: 80px; 
-            line-height: 0;      
-            padding-bottom: 10px; 
-            color: #d97656;      
-            font-weight: 400;    
-            pointer-events: none;
-        }
-
-        /* The Scrollable Container */
-        .scroll-container {
-            height: 100vh;
-            width: 100%;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch; 
-            
-            /* Padding for scroll area */
-            padding-top: 40vh;
-            padding-bottom: 100px;
-        }
-
-        /* --- LAYOUT WRAPPER (Centers content & Controls Margins) --- */
-        .content-wrapper {
-            width: 90%;          /* Leaves 5% margin on left and right on mobile/tablets */
-            max-width: 900px;    /* Prevents it from getting too wide on Desktop */
-            margin: 0 auto;      /* This centers the block horizontally */
-        }
-
-        /* Hide Scrollbar */
-        .scroll-container::-webkit-scrollbar { display: none; }
-        .scroll-container { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* --- LINKS & HEADERS --- */
-
-        .main-link {
-            font-size: 54px; /* Reduced from 72px for better sizing */
-            line-height: 1.0; 
-            cursor: pointer;
-            display: block;
-            margin-bottom: 10px; 
-            text-decoration: none;
-            color: #262624; 
-            transition: opacity 0.2s ease;
-        }
-
-        .main-link:hover {
-            opacity: 0.5;
-        }
-
-        .page-title {
-            font-size: 54px; /* Reduced from 72px */
-            line-height: 1.0;
-            margin-bottom: 40px;
-            pointer-events: none;
-        }
-
-        .section-header {
-            font-size: 18px;
-            margin-top: 50px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #262624; 
-            padding-bottom: 2px;
-            width: fit-content;
+        h1, h2, h3, h4 {
             font-weight: 700;
-            letter-spacing: 0.02em; 
-        }
-
-        .resource-link {
-            display: block;
-            font-size: 28px; /* Reduced from 34px */
-            font-weight: 500; 
-            line-height: 1.2;
-            text-decoration: none;
-            margin-bottom: 8px;
-            padding-left: 0; 
-            color: #262624;
+            text-transform: uppercase;
             letter-spacing: -0.03em;
-            transition: opacity 0.2s ease;
+            line-height: 0.95;
         }
 
-        /* Small indent for links only on desktop */
-        @media(min-width: 769px) {
-            .resource-link { padding-left: 0; /* Removing extra indent to keep alignment clean in center mode */ }
+        .display-text {
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: var(--space-md);
+            max-width: 12ch;
         }
 
-        .resource-link:hover {
-            opacity: 0.5;
-        }
-
-        /* --- TAG STYLES FOR PDF AND LINK --- */
-        .tag-pdf, .tag-link {
-            display: inline-block;
-            margin-right: 12px;  /* Space between tag and title */
-            font-size: 0.6em;
-            vertical-align: middle;
-            padding: 3px 6px;
-            border-radius: 2px;
-            line-height: 1;
-        }
-
-        .tag-pdf {
-            font-family: "Courier New", Courier, monospace; /* Monospace for PDF - technical feel */
-            background-color: #d97656;
-            color: #fff;
-            font-weight: 700;
+        .section-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
             letter-spacing: 0.05em;
+            margin-bottom: var(--space-sm);
+            display: block;
         }
 
-        .tag-link {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Same family but different style */
-            background-color: #262624;
-            color: #c5c5b7;
-            font-weight: 500;
-            font-style: italic;
-            letter-spacing: 0.02em;
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
         }
 
-        .back-btn {
-            font-size: 20px;
+        aside {
+            background-color: var(--color-surface-accent);
+            color: var(--color-text-inv);
+            padding: var(--space-md);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            border-right: var(--border-width) solid var(--color-border);
+        }
+
+        main {
+            padding: var(--space-lg);
+            background-color: var(--color-bg);
+        }
+
+        .nav-pill-container {
+            border: var(--border-width) solid var(--color-text-inv); 
+            border-radius: var(--radius-pill);
+            padding: 4px;
+            display: inline-flex;
+            gap: 4px;
+            margin-bottom: var(--space-xl);
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-xl);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .nav-logo svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+        }
+
+        .grade-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .grade-item {
+            width: 100%;
+        }
+
+        .grade-btn {
+            width: 100%;
+            text-align: left;
+            padding: var(--space-sm) var(--space-md);
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--color-text-inv);
+            border-radius: var(--radius-pill);
             cursor: pointer;
-            margin-bottom: 30px;
-            display: inline-block;
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            color: #262624;
-            opacity: 0.6;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grade-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #fff;
+        }
+
+        .grade-btn.active {
+            background: var(--color-surface);
+            color: var(--color-text-main);
+            border-color: var(--color-surface);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-xl);
+        }
+
+        .search-pill {
+            display: flex;
+            align-items: center;
+            border: var(--border-width) solid var(--color-border);
+            border-radius: var(--radius-pill);
+            padding: var(--space-xs) var(--space-md);
+            height: 54px;
+            width: 300px;
+        }
+
+        .search-pill input {
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            width: 100%;
+            margin-left: var(--space-xs);
+            font-family: var(--font-main);
+        }
+
+        .icon-group {
+            display: flex;
+            gap: -1px; 
+        }
+
+        .icon-btn {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            border: var(--border-width) solid var(--color-border);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
             transition: all 0.2s ease;
         }
-        .back-btn:hover { 
-            opacity: 1; 
-            border-bottom: 1px solid #262624;
+
+        .icon-btn:hover {
+            background: var(--color-border);
+            color: var(--color-bg);
         }
 
-        .detail-view {
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .resource-card {
+            border: var(--border-width) solid var(--color-border);
+            border-radius: var(--radius-card);
+            padding: var(--space-md);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            background: var(--color-surface);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .type-badge {
+            padding: 6px 12px;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid var(--color-border);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            opacity: 0.7;
+            font-weight: 400;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--space-sm);
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .file-info {
+            font-size: 0.85rem;
+            opacity: 0.6;
+            font-weight: 500;
+        }
+
+        .download-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: var(--border-width) solid var(--color-border);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .download-btn:hover {
+            background: var(--color-border);
+            color: var(--color-bg);
+        }
+
+        .resource-card.featured {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+            color: var(--color-text-inv);
+            border-color: #333;
+        }
+
+        .resource-card.featured .type-badge {
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .resource-card.featured .card-desc {
+            color: #ccc;
+        }
+
+        .resource-card.featured .download-btn {
+            border-color: rgba(255,255,255,0.3);
+            color: var(--color-text-inv);
+        }
+        
+        .resource-card.featured .download-btn:hover {
+            background-color: var(--color-surface-accent);
+            border-color: var(--color-surface-accent);
+            color: var(--color-text-inv);
+        }
+
+        .floating-badge {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .content-section {
             display: none;
-            animation: fadeIn 0.4s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .content-section.active {
+            display: block;
         }
 
-        /* --- MOBILE OPTIMIZATION --- */
+        /* Mobile responsiveness */
         @media (max-width: 768px) {
-            .header-mask {
-                height: 80px;
-            }
-            
-            .plus-sign {
-                font-size: 60px;
+            .layout-grid {
+                grid-template-columns: 1fr;
             }
 
-            /* On mobile, we keep font sizes manageable */
-            .main-link, .page-title {
-                font-size: 40px; 
-                line-height: 1.1;
-                margin-bottom: 10px;
+            aside {
+                position: relative;
+                height: auto;
+                border-right: none;
+                border-bottom: var(--border-width) solid var(--color-border);
             }
 
-            .resource-link {
-                font-size: 24px; 
-                margin-bottom: 15px; 
+            .top-bar {
+                flex-direction: column;
+                gap: var(--space-md);
             }
 
-            .section-header {
-                margin-top: 40px;
-                font-size: 16px;
-                margin-bottom: 15px;
+            .search-pill {
+                width: 100%;
             }
 
-            .tag-pdf, .tag-link {
-                font-size: 0.65em;
-                margin-right: 8px;
-                padding: 2px 4px;
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-logo {
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- THE HEADER MASK (Box with Plus Sign) -->
-    <div class="header-mask">
-        <div class="plus-sign">+</div>
-    </div>
-
-    <div class="scroll-container">
-        <!-- Content Wrapper ensures everything is centered with equal margins -->
-        <div class="content-wrapper">
-
-            <!-- ================= MAIN MENU ================= -->
-            <div id="main-menu">
-                <div class="main-link" onclick="showPage('page-11sci')">11 Science</div>
-                <div class="main-link" onclick="showPage('page-11com')">11 Commerce</div>
-                <div class="main-link" onclick="showPage('page-12sci')">12 Science</div>
-                <div class="main-link" onclick="showPage('page-12com')">12 Commerce</div>
+    <div class="layout-grid">
+        
+        <aside>
+            <div class="nav-logo">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                    <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+                </svg>
+                <span>SHIV'S CLASSROOM</span>
             </div>
 
-            <!-- ================= 11 SCIENCE ================= -->
-            <div id="page-11sci" class="detail-view">
-                <div class="back-btn" onclick="goBack()">← Back</div>
-                <h1 class="page-title">11 Science</h1>
-
-                <div class="section-header">Practice resource</div>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/question-bank.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Question bank</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/permutations.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Permutation WS</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/COMBINATIONS.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Combination WS</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/binomial-theorem.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Binomial theorem</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/3D%20Section%20Formula.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>3D section formula</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/domain-and-range-of-function.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Domain & range of function</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/Value%20of%20Trig%20Ratios.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Trigonometric angles</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/circles.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Circles WS</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/PT3%20Mathematics%20Worksheet.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>PT3 WS</a>
-                <a href="https://kumarsir34.wordpress.com/%f0%9f%91%89maths-class-xi/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Annual Sample Paper 1</a>
-                <a href="https://docs.google.com/document/d/1RixJESE2gh48lHGtp2EOSSXuN6s773tE/edit" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Annual Sample Paper 2</a>
-                <a href="https://davschoolmalout.org/File/424/NoticeBoard_ff2de4bf-5868-45b2-b772-89609bcea723_SAMPLE%20PAPER%20MATHS.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Annual Sample Paper 3</a>
-
-                <div class="section-header">Learning resource</div>
-                <a href="https://samnewgit.github.io/anglesimulation/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Angle in degree & radians</a>
-                <a href="http://samnewgit.github.io/trigratio/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Trigonometric ratio</a>
-                <a href="https://samnewgit.github.io/triggraph/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Trigonometric graphs</a>
-                <a href="https://samnewgit.github.io/ellipse-eccentricity/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Ellipse eccentricity</a>
-                <a href="https://www.geogebra.org/m/b6bk3auz" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>3D Geometry</a>
-                <a href="https://flashy-poppyseed-094.notion.site/11SCI-Sets-20432a4c15a5800fa960e1e7217be522" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Sets</a>
-                <a href="https://flashy-poppyseed-094.notion.site/11SCI-Probability-20432a4c15a5805480f0e4a03f51e6e1" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Probability</a>
-            </div>
-
-            <!-- ================= 11 COMMERCE ================= -->
-            <div id="page-11com" class="detail-view">
-                <div class="back-btn" onclick="goBack()">← Back</div>
-                <h1 class="page-title">11 Commerce</h1>
-                
-                <div class="section-header">Resources</div>
-                <a href="https://cbseacademic.nic.in/web_material/Manuals/Applied_Mathemathics.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Applied Maths Book(CBSE)</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-commerce/BOAT.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Boat worksheet</a>
-                <a href="https://davhaldwani.edu.in/File/5652/AppliedMaths_XI_2022-23.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Sample Paper 1</a>
-                <a href="https://davbr.org/File/4554/CYJ_PP_XI_AP-MATHS.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Sample Paper 2</a>
-                <a href="https://mycbseguide.com/blog/cbse-class-11-applied-maths-sample-papers/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Sample Paper 3</a>
-                <a href="https://drive.google.com/file/d/1ITdYCHi3yShAX7RWvqWe8uJIs19L_tcN/view" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>KV Support Material</a>
-            </div>
-
-            <!-- ================= 12 SCIENCE ================= -->
-            <div id="page-12sci" class="detail-view">
-                <div class="back-btn" onclick="goBack()">← Back</div>
-                <h1 class="page-title">12 Science</h1>
-
-                <div class="section-header">Resources</div>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/12th%20Support%20Material%20DOE%20Delhi.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Support Material</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/MTG.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>MTG question bank</a>
-                <a href="https://drive.google.com/file/d/16Je9yiyprS06jnGP3enlC1BM2ljnXVQe/view" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Shivdas competency based questions</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/Board%20QB.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Board question bank (March 24 & 25)</a>
-            </div>
-
-            <!-- ================= 12 COMMERCE ================= -->
-            <div id="page-12com" class="detail-view">
-                <div class="back-btn" onclick="goBack()">← Back</div>
-                <h1 class="page-title">12 Commerce</h1>
-
-                <div class="section-header">Resources</div>
-                <a href="https://cbseacademic.nic.in/web_material/Manuals/Book%20_Applied_Mathematics_ClassXII.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Applied Maths Book(CBSE)</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Oswaal%20QB%20Chapterwise.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Oswaal QB</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Bond%20Valuation.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Bond valuation</a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Hypothesis.pdf" class="resource-link" target="_blank"><span class="tag-pdf">[PDF]</span>Hypothesis theory</a>
-                <a href="https://appliedmaths.site/" class="resource-link" target="_blank"><span class="tag-link">[LINK]</span>Board question bank (All years)</a>
-            </div>
+            <span class="section-label" style="opacity: 0.7;">Select Class</span>
             
-        </div> <!-- End content wrapper -->
+            <ul class="grade-list">
+                <li class="grade-item">
+                    <button class="grade-btn active" onclick="showSection('11sci')">
+                        11 Science
+                        <span>→</span>
+                    </button>
+                </li>
+                <li class="grade-item">
+                    <button class="grade-btn" onclick="showSection('11com')">
+                        11 Commerce
+                    </button>
+                </li>
+                <li class="grade-item">
+                    <button class="grade-btn" onclick="showSection('12sci')">
+                        12 Science
+                    </button>
+                </li>
+                <li class="grade-item">
+                    <button class="grade-btn" onclick="showSection('12com')">
+                        12 Commerce
+                    </button>
+                </li>
+            </ul>
+
+            <div style="margin-top: auto;">
+                <p style="font-size: 0.8rem; opacity: 0.6;">© 2026 Shiv's Classroom</p>
+            </div>
+        </aside>
+
+        <main>
+            
+            <!-- 11 SCIENCE SECTION -->
+            <div id="section-11sci" class="content-section active">
+                <div class="top-bar">
+                    <h1 class="display-text" style="font-size: 2rem; margin: 0;">11 Science Mathematics</h1>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="search-pill">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" placeholder="Search resources..." id="search-11sci" onkeyup="filterResources('11sci')">
+                        </div>
+                    </div>
+                </div>
+
+                <span class="section-label">Practice Resources</span>
+                <div class="resources-grid" id="grid-11sci">
+                    
+                    <div class="resource-card" data-title="Question bank">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Question Bank</h3>
+                            <p class="card-desc">Comprehensive collection of practice questions covering all topics.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/question-bank.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Permutation WS">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Permutation Worksheet</h3>
+                            <p class="card-desc">Practice problems on permutations and arrangements.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/permutations.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Combination WS">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Combination Worksheet</h3>
+                            <p class="card-desc">Practice problems on combinations and selections.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/COMBINATIONS.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card featured" data-title="Binomial theorem">
+                        <div class="floating-badge">
+                            <span>●</span> Important
+                        </div>
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <h3 class="card-title">Binomial Theorem</h3>
+                            <p class="card-desc">Complete guide to binomial expansion and applications.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/binomial-theorem.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="3D section formula">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">3D Section Formula</h3>
+                            <p class="card-desc">Detailed notes on section formula in three-dimensional geometry.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/3D%20Section%20Formula.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Domain range function">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Domain & Range of Functions</h3>
+                            <p class="card-desc">Comprehensive guide to finding domain and range of various functions.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/domain-and-range-of-function.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Trigonometric angles">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Trigonometric Angles</h3>
+                            <p class="card-desc">Values of trigonometric ratios for standard angles.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/Value%20of%20Trig%20Ratios.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Circles WS">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Circles Worksheet</h3>
+                            <p class="card-desc">Practice problems on conic sections - circles.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/circles.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="PT3 WS">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">PT3 Worksheet</h3>
+                            <p class="card-desc">Periodic Test 3 mathematics worksheet for practice.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/PT3%20Mathematics%20Worksheet.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card featured" data-title="Annual Sample Paper 1">
+                        <div class="floating-badge">
+                            <span>●</span> Exam Prep
+                        </div>
+                        <div class="card-meta">
+                            <span class="type-badge">LINK</span>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <h3 class="card-title">Annual Sample Paper 1</h3>
+                            <p class="card-desc">Complete sample paper for annual examination preparation.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">External Link</span>
+                            <a href="https://kumarsir34.wordpress.com/%f0%9f%91%89maths-class-xi/" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Annual Sample Paper 2">
+                        <div class="card-meta">
+                            <span class="type-badge">LINK</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Annual Sample Paper 2</h3>
+                            <p class="card-desc">Additional sample paper for comprehensive exam preparation.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">Google Docs</span>
+                            <a href="https://docs.google.com/document/d/1RixJESE2gh48lHGtp2EOSSXuN6s773tE/edit" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Annual Sample Paper 3">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Annual Sample Paper 3</h3>
+                            <p class="card-desc">Third sample paper for thorough exam preparation.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://davschoolmalout.org/File/424/NoticeBoard_ff2de4bf-5868-45b2-b772-89609bcea723_SAMPLE%20PAPER%20MATHS.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <span class="section-label" style="margin-top: 3rem;">Learning Resources</span>
+                <div class="resources-grid">
+                    
+                    <div class="resource-card" data-title="Angle in degree radians">
+                        <div class="card-meta">
+                            <span class="type-badge">Interactive</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Angle in Degree & Radians</h3>
+                            <p class="card-desc">Interactive simulation for understanding angle conversions.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">Web App</span>
+                            <a href="https://samnewgit.github.io/anglesimulation/" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Trigonometric ratio">
+                        <div class="card-meta">
+                            <span class="type-badge">Interactive</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Trigonometric Ratio</h3>
+                            <p class="card-desc">Visual learning tool for trigonometric ratios.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">Web App</span>
+                            <a href="http://samnewgit.github.io/trigratio/" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Trigonometric graphs">
+                        <div class="card-meta">
+                            <span class="type-badge">Interactive</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Trigonometric Graphs</h3>
+                            <p class="card-desc">Interactive tool to explore trigonometric function graphs.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">Web App</span>
+                            <a href="https://samnewgit.github.io/triggraph/" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Ellipse eccentricity">
+                        <div class="card-meta">
+                            <span class="type-badge">Interactive</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Ellipse Eccentricity</h3>
+                            <p class="card-desc">Visual demonstration of ellipse properties and eccentricity.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">Web App</span>
+                            <a href="https://samnewgit.github.io/ellipse-eccentricity/" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="3D Geometry">
+                        <div class="card-meta">
+                            <span class="type-badge">Interactive</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">3D Geometry</h3>
+                            <p class="card-desc">Interactive GeoGebra tool for three-dimensional geometry.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">GeoGebra</span>
+                            <a href="https://www.geogebra.org/m/b6bk3auz" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Sets">
+                        <div class="card-meta">
+                            <span class="type-badge">Notes</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Sets</h3>
+                            <p class="card-desc">Comprehensive notes on set theory and operations.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">Notion</span>
+                            <a href="https://flashy-poppyseed-094.notion.site/11SCI-Sets-20432a4c15a5800fa960e1e7217be522" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Probability">
+                        <div class="card-meta">
+                            <span class="type-badge">Notes</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Probability</h3>
+                            <p class="card-desc">Complete notes on probability theory and applications.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">Notion</span>
+                            <a href="https://flashy-poppyseed-094.notion.site/11SCI-Probability-20432a4c15a5805480f0e4a03f51e6e1" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 11 COMMERCE SECTION -->
+            <div id="section-11com" class="content-section">
+                <div class="top-bar">
+                    <h1 class="display-text" style="font-size: 2rem; margin: 0;">11 Commerce Applied Maths</h1>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="search-pill">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" placeholder="Search resources..." id="search-11com" onkeyup="filterResources('11com')">
+                        </div>
+                    </div>
+                </div>
+
+                <span class="section-label">Study Materials</span>
+                <div class="resources-grid" id="grid-11com">
+                    
+                    <div class="resource-card featured" data-title="Applied Maths Book">
+                        <div class="floating-badge">
+                            <span>●</span> CBSE Official
+                        </div>
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <h3 class="card-title">Applied Maths Book (CBSE)</h3>
+                            <p class="card-desc">Official CBSE textbook for Class 11 Applied Mathematics.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://cbseacademic.nic.in/web_material/Manuals/Applied_Mathemathics.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Boat worksheet">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Boat Worksheet</h3>
+                            <p class="card-desc">Practice problems on boat and stream concepts.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-commerce/BOAT.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Sample Paper 1">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Sample Paper 1</h3>
+                            <p class="card-desc">Comprehensive sample paper for exam preparation.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://davhaldwani.edu.in/File/5652/AppliedMaths_XI_2022-23.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Sample Paper 2">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Sample Paper 2</h3>
+                            <p class="card-desc">Additional sample paper for thorough practice.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://davbr.org/File/4554/CYJ_PP_XI_AP-MATHS.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Sample Paper 3">
+                        <div class="card-meta">
+                            <span class="type-badge">LINK</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Sample Paper 3</h3>
+                            <p class="card-desc">Multiple sample papers collection from MyCBSEGuide.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">Website</span>
+                            <a href="https://mycbseguide.com/blog/cbse-class-11-applied-maths-sample-papers/" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="KV Support Material">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">KV Support Material</h3>
+                            <p class="card-desc">Kendriya Vidyalaya comprehensive support material.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">Google Drive</span>
+                            <a href="https://drive.google.com/file/d/1ITdYCHi3yShAX7RWvqWe8uJIs19L_tcN/view" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 12 SCIENCE SECTION -->
+            <div id="section-12sci" class="content-section">
+                <div class="top-bar">
+                    <h1 class="display-text" style="font-size: 2rem; margin: 0;">12 Science Mathematics</h1>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="search-pill">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" placeholder="Search resources..." id="search-12sci" onkeyup="filterResources('12sci')">
+                        </div>
+                    </div>
+                </div>
+
+                <span class="section-label">Study Materials</span>
+                <div class="resources-grid" id="grid-12sci">
+                    
+                    <div class="resource-card featured" data-title="Support Material">
+                        <div class="floating-badge">
+                            <span>●</span> DOE Delhi
+                        </div>
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <h3 class="card-title">Support Material</h3>
+                            <p class="card-desc">Official Department of Education Delhi support material for Class 12.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/12th%20Support%20Material%20DOE%20Delhi.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="MTG question bank">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">MTG Question Bank</h3>
+                            <p class="card-desc">Comprehensive question bank from MTG for board exam preparation.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/MTG.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Shivdas competency based">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Shivdas Competency Based Questions</h3>
+                            <p class="card-desc">Competency-focused questions for better understanding and practice.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">Google Drive</span>
+                            <a href="https://drive.google.com/file/d/16Je9yiyprS06jnGP3enlC1BM2ljnXVQe/view" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Board question bank">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Board Question Bank (March 24 & 25)</h3>
+                            <p class="card-desc">Previous years board questions from 2024 and 2025.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/Board%20QB.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 12 COMMERCE SECTION -->
+            <div id="section-12com" class="content-section">
+                <div class="top-bar">
+                    <h1 class="display-text" style="font-size: 2rem; margin: 0;">12 Commerce Applied Maths</h1>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="search-pill">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" placeholder="Search resources..." id="search-12com" onkeyup="filterResources('12com')">
+                        </div>
+                    </div>
+                </div>
+
+                <span class="section-label">Study Materials</span>
+                <div class="resources-grid" id="grid-12com">
+                    
+                    <div class="resource-card featured" data-title="Applied Maths Book">
+                        <div class="floating-badge">
+                            <span>●</span> CBSE Official
+                        </div>
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <h3 class="card-title">Applied Maths Book (CBSE)</h3>
+                            <p class="card-desc">Official CBSE textbook for Class 12 Applied Mathematics.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://cbseacademic.nic.in/web_material/Manuals/Book%20_Applied_Mathematics_ClassXII.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Oswaal QB">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Oswaal Question Bank</h3>
+                            <p class="card-desc">Chapterwise question bank from Oswaal for comprehensive preparation.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Oswaal%20QB%20Chapterwise.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Bond valuation">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Bond Valuation</h3>
+                            <p class="card-desc">Comprehensive notes on bond valuation and financial mathematics.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Bond%20Valuation.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Hypothesis theory">
+                        <div class="card-meta">
+                            <span class="type-badge">PDF</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Hypothesis Theory</h3>
+                            <p class="card-desc">Detailed notes on hypothesis testing and statistical inference.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">PDF Document</span>
+                            <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Hypothesis.pdf" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" data-title="Board question bank">
+                        <div class="card-meta">
+                            <span class="type-badge">LINK</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Board Question Bank (All Years)</h3>
+                            <p class="card-desc">Complete collection of board examination questions from all years.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-info">Website</span>
+                            <a href="https://appliedmaths.site/" target="_blank" class="download-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
     </div>
 
     <script>
-        function showPage(pageId) {
-            document.getElementById('main-menu').style.display = 'none';
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
             
-            const pages = document.querySelectorAll('.detail-view');
-            pages.forEach(page => page.style.display = 'none');
-
-            document.getElementById(pageId).style.display = 'block';
-
-            document.querySelector('.scroll-container').scrollTop = 0;
+            // Remove active from all buttons
+            document.querySelectorAll('.grade-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.innerHTML = btn.innerHTML.replace(' <span>→</span>', '');
+            });
             
-            // Adjust padding for content view to avoid overlap with header mask
-            if (window.innerWidth <= 768) {
-                document.querySelector('.scroll-container').style.paddingTop = "110px"; 
-            } else {
-                document.querySelector('.scroll-container').style.paddingTop = "140px"; 
-            }
+            // Show selected section
+            document.getElementById('section-' + sectionId).classList.add('active');
+            
+            // Make clicked button active
+            event.target.classList.add('active');
+            event.target.innerHTML += ' <span>→</span>';
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
         }
 
-        function goBack() {
-            const pages = document.querySelectorAll('.detail-view');
-            pages.forEach(page => page.style.display = 'none');
-
-            document.getElementById('main-menu').style.display = 'block';
-
-            // Restore artistic top padding for the home screen
-            if (window.innerWidth <= 768) {
-                document.querySelector('.scroll-container').style.paddingTop = "30vh";
-            } else {
-                document.querySelector('.scroll-container').style.paddingTop = "40vh";
-            }
+        function filterResources(section) {
+            const searchInput = document.getElementById('search-' + section).value.toLowerCase();
+            const grid = document.getElementById('grid-' + section);
+            const cards = grid.getElementsByClassName('resource-card');
+            
+            Array.from(cards).forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                const cardTitle = card.querySelector('.card-title').textContent.toLowerCase();
+                const cardDesc = card.querySelector('.card-desc').textContent.toLowerCase();
+                
+                if (title.includes(searchInput) || cardTitle.includes(searchInput) || cardDesc.includes(searchInput)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
     </script>
 
