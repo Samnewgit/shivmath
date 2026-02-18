@@ -4,639 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shiv's Classroom</title>
-    <style>
-        :root {
-            --bg-color: #F4F4F0;
-            --text-primary: #000000;
-            --text-secondary: #000000;
-            --border-color: #000000;
-            --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            --spacing-unit: 24px;
-            --max-width: 500px;
-            --border-weight: 4px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        body {
-            background-color: #ECECEC;
-            color: var(--text-primary);
-            font-family: var(--font-family);
-            font-size: 16px;
-            line-height: 1.4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .app-container {
-            width: 100%;
-            max-width: var(--max-width);
-            background-color: var(--bg-color);
-            border: var(--border-weight) solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
-        }
-
-        header {
-            padding: 40px var(--spacing-unit);
-            font-size: 24px;
-            font-weight: 400;
-            letter-spacing: -0.03em;
-            border-bottom: var(--border-weight) solid var(--border-color);
-            background: var(--bg-color);
-        }
-
-        .brand-bold {
-            font-weight: 700;
-            display: block;
-            font-size: 32px;
-            line-height: 1;
-            margin-bottom: 4px;
-        }
-
-        .brand-light {
-            font-weight: 400;
-            font-size: 18px;
-            color: var(--text-primary);
-            opacity: 0.8;
-        }
-
-        /* View Management */
-        .view {
-            display: none;
-            flex-direction: column;
-        }
-
-        .view.active {
-            display: flex;
-        }
-
-        /* Category Cards (Main Menu) */
-        .category-card {
-            padding: 40px var(--spacing-unit);
-            border-bottom: var(--border-weight) solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background: var(--bg-color);
-        }
-
-        .category-card:last-child {
-            border-bottom: none;
-        }
-
-        .category-card:hover, .category-card:active {
-            background-color: #000;
-            color: #fff;
-        }
-
-        .category-card:hover .category-description {
-            color: #ccc;
-        }
-
-        .category-card:hover .category-arrow {
-            stroke: #fff;
-        }
-
-        .category-content {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            max-width: 80%;
-        }
-
-        .category-title {
-            font-size: 36px;
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            line-height: 0.95;
-            text-transform: uppercase;
-        }
-
-        .category-description {
-            color: var(--text-primary);
-            font-size: 15px;
-            line-height: 1.4;
-            letter-spacing: 0;
-            font-weight: 500;
-        }
-
-        .category-arrow {
-            width: 40px;
-            height: 40px;
-            stroke: var(--text-primary);
-            stroke-width: 2.5;
-            flex-shrink: 0;
-            margin-top: 4px;
-        }
-
-        /* Resource List */
-        .resource-list {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .section-header {
-            padding: 16px var(--spacing-unit);
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            background: var(--bg-color);
-            border-bottom: 2px solid var(--border-color);
-            color: var(--text-primary);
-            opacity: 0.6;
-        }
-
-        .list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 20px var(--spacing-unit);
-            border-bottom: var(--border-weight) solid var(--border-color);
-            text-decoration: none;
-            color: var(--text-primary);
-            transition: all 0.2s ease;
-            background: var(--bg-color);
-        }
-
-        .list-item:last-child {
-            border-bottom: none;
-        }
-
-        .list-item:hover, .list-item:active {
-            background-color: #000;
-            color: #fff;
-        }
-
-        .list-item:hover .item-meta {
-            color: #ccc;
-        }
-
-        .list-item:hover .item-right {
-            color: #fff;
-        }
-
-        .item-left {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            padding-right: 10px;
-        }
-
-        .item-title {
-            font-size: 19px;
-            letter-spacing: -0.02em;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .item-meta {
-            font-size: 13px;
-            color: var(--text-primary);
-            letter-spacing: 0;
-            text-transform: uppercase;
-            font-weight: 600;
-            opacity: 0.6;
-        }
-
-        .item-right {
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            color: var(--text-primary);
-            font-variant-numeric: tabular-nums;
-            text-transform: uppercase;
-            white-space: nowrap;
-            border: 2px solid var(--border-color);
-            padding: 4px 8px;
-            margin-top: 2px;
-        }
-
-        .list-item:hover .item-right {
-            border-color: #fff;
-        }
-
-        /* Back Button */
-        .back-btn {
-            padding: 24px var(--spacing-unit);
-            border-bottom: var(--border-weight) solid var(--border-color);
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.2s ease;
-            background: var(--bg-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .back-btn:hover {
-            background-color: #000;
-            color: #fff;
-        }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-color);
-            border-left: var(--border-weight) solid var(--border-color);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #000;
-            border: 3px solid var(--bg-color);
-        }
-
-        /* Mobile Optimizations */
-        @media (max-width: 480px) {
-            body {
-                padding: 0;
-                background-color: var(--bg-color);
-            }
-            
-            .app-container {
-                border: none;
-                box-shadow: none;
-                max-width: 100%;
-            }
-            
-            .category-title {
-                font-size: 32px;
-            }
-        }
-
-        @media (min-width: 768px) {
-            body {
-                background-color: #E0E0E0;
-            }
-        }
-    </style>
-<base target="_blank">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-
     <div class="app-container">
-        <header>
-            <span class="brand-bold">SHIV'S</span>
-            <span class="brand-light">Classroom Resources</span>
-        </header>
 
-        <!-- MAIN MENU -->
-        <div id="main-menu" class="view active">
-            <div class="category-card" onclick="showCategory('sci-11')">
-                <div class="category-content">
-                    <div class="category-title">11 Science</div>
-                    <div class="category-description">Sets, Probability, Permutations, Trigonometry & 3D Geometry</div>
-                </div>
-                <svg class="category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </div>
+        <a href="/" class="header-link">
+            <header>
+                <span class="brand-bold">SHIV'S</span>
+                <span class="brand-light">Classroom Resources</span>
+            </header>
+        </a>
 
-            <div class="category-card" onclick="showCategory('com-11')">
-                <div class="category-content">
-                    <div class="category-title">11 Commerce</div>
-                    <div class="category-description">Applied Mathematics, Algebra & Business Math Fundamentals</div>
-                </div>
-                <svg class="category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
+        <a href="/11-science/" class="category-card">
+            <div class="category-content">
+                <div class="category-title">11 Science</div>
+                <div class="category-description">Sets, Probability, Permutations, Trigonometry & 3D Geometry</div>
             </div>
+            <svg class="category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
 
-            <div class="category-card" onclick="showCategory('sci-12')">
-                <div class="category-content">
-                    <div class="category-title">12 Science</div>
-                    <div class="category-description">Advanced Calculus, Vectors, 3D Geometry & Board Preparation</div>
-                </div>
-                <svg class="category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
+        <a href="/11-commerce/" class="category-card">
+            <div class="category-content">
+                <div class="category-title">11 Commerce</div>
+                <div class="category-description">Applied Mathematics, Algebra & Business Math Fundamentals</div>
             </div>
+            <svg class="category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
 
-            <div class="category-card" onclick="showCategory('com-12')">
-                <div class="category-content">
-                    <div class="category-title">12 Commerce</div>
-                    <div class="category-description">Financial Mathematics, Bonds, Hypothesis Testing & Board Papers</div>
-                </div>
-                <svg class="category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
+        <a href="/12-science/" class="category-card">
+            <div class="category-content">
+                <div class="category-title">12 Science</div>
+                <div class="category-description">Advanced Calculus, Vectors, 3D Geometry & Board Preparation</div>
             </div>
-        </div>
+            <svg class="category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
 
-        <!-- 11 SCIENCE -->
-        <div id="sci-11" class="view">
-            <div class="back-btn" onclick="showMenu()">← Back</div>
-            
-            <div class="section-header">Practice Worksheets</div>
-            <div class="resource-list">
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/question-bank.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Question Bank</span>
-                        <span class="item-meta">Full Syllabus</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/permutations.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Permutations WS</span>
-                        <span class="item-meta">Combinatorics</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/COMBINATIONS.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Combinations WS</span>
-                        <span class="item-meta">Combinatorics</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/binomial-theorem.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Binomial Theorem</span>
-                        <span class="item-meta">Algebra</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/3D%20Section%20Formula.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">3D Section Formula</span>
-                        <span class="item-meta">Geometry</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/domain-and-range-of-function.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Domain & Range</span>
-                        <span class="item-meta">Functions</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/Value%20of%20Trig%20Ratios.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Trigonometric Angles</span>
-                        <span class="item-meta">Trigonometry</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/circles.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Circles WS</span>
-                        <span class="item-meta">Geometry</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-science/PT3%20Mathematics%20Worksheet.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">PT3 Worksheet</span>
-                        <span class="item-meta">Assessment</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
+        <a href="/12-commerce/" class="category-card">
+            <div class="category-content">
+                <div class="category-title">12 Commerce</div>
+                <div class="category-description">Financial Mathematics, Bonds, Hypothesis Testing & Board Papers</div>
             </div>
+            <svg class="category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
 
-            <div class="section-header">Sample Papers</div>
-            <div class="resource-list">
-                <a href="https://kumarsir34.wordpress.com/%f0%9f%91%89maths-class-xi/" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Annual Sample Paper 1</span>
-                        <span class="item-meta">External Link</span>
-                    </div>
-                    <span class="item-right">Link</span>
-                </a>
-                <a href="https://docs.google.com/document/d/1RixJESE2gh48lHGtp2EOSSXuN6s773tE/edit" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Annual Sample Paper 2</span>
-                        <span class="item-meta">Google Docs</span>
-                    </div>
-                    <span class="item-right">Link</span>
-                </a>
-                <a href="https://davschoolmalout.org/File/424/NoticeBoard_ff2de4bf-5868-45b2-b772-89609bcea723_SAMPLE%20PAPER%20MATHS.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Annual Sample Paper 3</span>
-                        <span class="item-meta">DAV Malout</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
+        <a href="/about/" class="category-card" style="border-top: var(--border-weight) solid var(--border-color); border-bottom: none;">
+            <div class="category-content">
+                <div class="category-title">About</div>
+                <div class="category-description">Meet the teacher — background, experience & teaching philosophy</div>
             </div>
+            <svg class="category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
 
-            <div class="section-header">Interactive Learning</div>
-            <div class="resource-list">
-                <a href="https://samnewgit.github.io/anglesimulation/" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Angle in Degrees & Radians</span>
-                        <span class="item-meta">Simulation</span>
-                    </div>
-                    <span class="item-right">Link</span>
-                </a>
-                <a href="http://samnewgit.github.io/trigratio/" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Trigonometric Ratios</span>
-                        <span class="item-meta">Interactive Tool</span>
-                    </div>
-                    <span class="item-right">Link</span>
-                </a>
-                <a href="https://samnewgit.github.io/triggraph/" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Trigonometric Graphs</span>
-                        <span class="item-meta">Visualization</span>
-                    </div>
-                    <span class="item-right">Link</span>
-                </a>
-                <a href="https://samnewgit.github.io/ellipse-eccentricity/" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Ellipse Eccentricity</span>
-                        <span class="item-meta">Interactive Demo</span>
-                    </div>
-                    <span class="item-right">Link</span>
-                </a>
-                <a href="https://www.geogebra.org/m/b6bk3auz" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">3D Geometry</span>
-                        <span class="item-meta">GeoGebra</span>
-                    </div>
-                    <span class="item-right">Link</span>
-                </a>
-                <a href="https://flashy-poppyseed-094.notion.site/11SCI-Sets-20432a4c15a5800fa960e1e7217be522" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Sets Theory</span>
-                        <span class="item-meta">Notion Notes</span>
-                    </div>
-                    <span class="item-right">Link</span>
-                </a>
-                <a href="https://flashy-poppyseed-094.notion.site/11SCI-Probability-20432a4c15a5805480f0e4a03f51e6e1" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Probability</span>
-                        <span class="item-meta">Notion Notes</span>
-                    </div>
-                    <span class="item-right">Link</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- 11 COMMERCE -->
-        <div id="com-11" class="view">
-            <div class="back-btn" onclick="showMenu()">← Back</div>
-            <div class="resource-list">
-                <a href="https://cbseacademic.nic.in/web_material/Manuals/Applied_Mathemathics.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Applied Maths Book</span>
-                        <span class="item-meta">CBSE Official</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/11-commerce/BOAT.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Boat Worksheet</span>
-                        <span class="item-meta">Practice Problems</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://davhaldwani.edu.in/File/5652/AppliedMaths_XI_2022-23.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Sample Paper 1</span>
-                        <span class="item-meta">DAV Haldwani</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://davbr.org/File/4554/CYJ_PP_XI_AP-MATHS.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Sample Paper 2</span>
-                        <span class="item-meta">DAV BR</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://mycbseguide.com/blog/cbse-class-11-applied-maths-sample-papers/" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Sample Paper 3</span>
-                        <span class="item-meta">MyCBSEGuide</span>
-                    </div>
-                    <span class="item-right">Link</span>
-                </a>
-                <a href="https://drive.google.com/file/d/1ITdYCHi3yShAX7RWvqWe8uJIs19L_tcN/view" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">KV Support Material</span>
-                        <span class="item-meta">Kendriya Vidyalaya</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- 12 SCIENCE -->
-        <div id="sci-12" class="view">
-            <div class="back-btn" onclick="showMenu()">← Back</div>
-            <div class="resource-list">
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/12th%20Support%20Material%20DOE%20Delhi.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Support Material</span>
-                        <span class="item-meta">DOE Delhi</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/MTG.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">MTG Question Bank</span>
-                        <span class="item-meta">Competitive Prep</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://drive.google.com/file/d/16Je9yiyprS06jnGP3enlC1BM2ljnXVQe/view" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Shivdas Competency Based</span>
-                        <span class="item-meta">Practice Questions</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-science/Board%20QB.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Board Question Bank</span>
-                        <span class="item-meta">March 2024 & 2025</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- 12 COMMERCE -->
-        <div id="com-12" class="view">
-            <div class="back-btn" onclick="showMenu()">← Back</div>
-            <div class="resource-list">
-                <a href="https://cbseacademic.nic.in/web_material/Manuals/Book%20_Applied_Mathematics_ClassXII.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Applied Maths Book</span>
-                        <span class="item-meta">CBSE Official</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Oswaal%20QB%20Chapterwise.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Oswaal Question Bank</span>
-                        <span class="item-meta">Chapterwise</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Bond%20Valuation.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Bond Valuation</span>
-                        <span class="item-meta">Financial Math</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://pub-97d37aea4fae4c888b8fa45d04fb260d.r2.dev/12-commerce/Hypothesis.pdf" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Hypothesis Theory</span>
-                        <span class="item-meta">Statistics</span>
-                    </div>
-                    <span class="item-right">PDF</span>
-                </a>
-                <a href="https://appliedmaths.site/" class="list-item" target="_blank">
-                    <div class="item-left">
-                        <span class="item-title">Board Question Bank</span>
-                        <span class="item-meta">All Years Archive</span>
-                    </div>
-                    <span class="item-right">Link</span>
-                </a>
-            </div>
-        </div>
     </div>
-
-    <script>
-        function showCategory(id) {
-            document.querySelectorAll('.view').forEach(view => {
-                view.classList.remove('active');
-            });
-            document.getElementById(id).classList.add('active');
-        }
-
-        function showMenu() {
-            document.querySelectorAll('.view').forEach(view => {
-                view.classList.remove('active');
-            });
-            document.getElementById('main-menu').classList.add('active');
-        }
-    </script>
-
 </body>
 </html>
