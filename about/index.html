@@ -107,69 +107,80 @@
 
         <div class="section-header">Teaching Tools</div>
 
-        <p class="tools-intro">All learning tools listed below were developed using AI.</p>
-
-        <div class="tools-grid">
-            <a href="https://samnewgit.github.io/anglesimulation/" class="tool-card" target="_blank">
-                <div class="tool-title">Interactive Angles</div>
-                <div class="tool-subtitle">Degrees &amp; Radians Sim</div>
-            </a>
-            <a href="https://samnewgit.github.io/trigratio/" class="tool-card" target="_blank">
-                <div class="tool-title">Trigonometric Ratios</div>
-                <div class="tool-subtitle">Unit Circle Explorer</div>
-            </a>
-            <a href="https://samnewgit.github.io/triggraph/" class="tool-card" target="_blank">
-                <div class="tool-title">Trigonometric Graphs</div>
-                <div class="tool-subtitle">Visual Graphing Guide</div>
-            </a>
-            <a href="https://samnewgit.github.io/ellipse-eccentricity/" class="tool-card" target="_blank">
-                <div class="tool-title">Ellipse Visualiser</div>
-                <div class="tool-subtitle">Eccentricity Tool</div>
-            </a>
+        <div class="tools-block">
+            <p class="tools-note">All learning tools listed below were developed using AI.</p>
+            <div class="tools-grid">
+                <a href="https://samnewgit.github.io/anglesimulation/" class="tool-card" target="_blank">
+                    <div class="tool-name">Interactive Angles</div>
+                    <div class="tool-tag">Degrees &amp; Radians Sim ↗</div>
+                </a>
+                <a href="https://samnewgit.github.io/trigratio/" class="tool-card" target="_blank">
+                    <div class="tool-name">Trigonometric Ratios</div>
+                    <div class="tool-tag">Unit Circle Explorer ↗</div>
+                </a>
+                <a href="https://samnewgit.github.io/triggraph/" class="tool-card" target="_blank">
+                    <div class="tool-name">Trigonometric Graphs</div>
+                    <div class="tool-tag">Visual Graphing Guide ↗</div>
+                </a>
+                <a href="https://samnewgit.github.io/ellipse-eccentricity/" class="tool-card" target="_blank">
+                    <div class="tool-name">Ellipse Visualiser</div>
+                    <div class="tool-tag">Eccentricity Tool ↗</div>
+                </a>
+            </div>
         </div>
 
         <style>
-            .tools-intro {
-                font-size: 0.92rem;
-                color: #666;
-                margin: 0 0 1.2rem 0;
+            .tools-block {
+                padding: 24px var(--spacing-unit);
+                border-bottom: var(--border-weight) solid var(--border-color);
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .tools-note {
+                font-size: 14px;
+                line-height: 1.5;
+                margin: 0;
+                opacity: 0.6;
             }
             .tools-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 0.85rem;
-                margin-bottom: 1.5rem;
+                gap: var(--border-weight);
+                background: var(--border-color);
+                border: var(--border-weight) solid var(--border-color);
             }
             .tool-card {
                 display: block;
-                border: 1.5px solid #e5e5e5;
-                border-radius: 10px;
-                padding: 1rem 1.1rem;
+                padding: 16px;
+                background: var(--bg-primary, #fff);
                 text-decoration: none;
-                color: inherit;
-                transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
-                background: #fafafa;
+                color: var(--text-primary);
+                transition: background 0.2s ease;
             }
-            .tool-card:hover {
-                border-color: #222;
-                background: #fff;
-                box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            .tool-card:hover { background: #000; }
+            .tool-card:hover .tool-name,
+            .tool-card:hover .tool-tag {
+                color: #fff;
+                opacity: 1;
             }
-            .tool-title {
+            .tool-name {
+                font-size: 15px;
                 font-weight: 700;
-                font-size: 0.95rem;
-                color: #111;
-                margin-bottom: 0.25rem;
-                letter-spacing: -0.01em;
+                letter-spacing: -0.02em;
+                margin-bottom: 5px;
+                color: var(--text-primary);
             }
-            .tool-subtitle {
-                font-size: 0.82rem;
-                color: #888;
+            .tool-tag {
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                opacity: 0.5;
+                color: var(--text-primary);
             }
             @media (max-width: 480px) {
-                .tools-grid {
-                    grid-template-columns: 1fr;
-                }
+                .tools-grid { grid-template-columns: 1fr; }
             }
         </style>
 
